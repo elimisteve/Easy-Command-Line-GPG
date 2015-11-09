@@ -1,29 +1,18 @@
 #!/bin/bash
 
-# Easy Command Line GPG
-# ez-cli-gpg.sh
-# Version 2.2 (released 2010.03.15)
-
-# Contact Information
-# -------------------
-# Author:  Steve Phillips / fraktil
-# Email:   fraktil@gmail.com
-# Twitter: twitter.com/fraktil
-
-if [ $# -lt 1 ]; then
-    echo Usage: `basename $0` [Recipient]
+if [ -z $1 ]; then
+    echo Usage: `basename $0` recipient
     exit 0
 fi
 
-# Recipient often a (partial) name or (partial) email address
-# E.g., fraktil
+# Recipient specified via command line
+# Is often a (partial) name or (partial) email address
 recip=$1
 
 # Where to store encrypted and unencrypted email
 # Use absolute path; ~ not interpreted as /home/username
 # Directory must exist
-maildir=$HOME
-#maildir=$HOME/email
+maildir=$HOME/private
 
 # Date format (used to name file)
 # year, month, day, hour, minute
@@ -35,11 +24,11 @@ date=`date +%Y%m%d%H%M`
 filename=$recip-to-$date.txt
 
 # Text editor used to compose email
-editor='nano'
-#editor=$EDITOR # use system default stored in $EDITOR
+editor=$EDITOR # use system default stored in $EDITOR
 #editor='emacsclient -t'
 #editor='emacs -nw'
 #editor='vi'
+#editor='nano'
 
 # Drop into text editor to write the email
 $editor $maildir/$filename
